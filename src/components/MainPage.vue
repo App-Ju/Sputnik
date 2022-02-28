@@ -6,7 +6,7 @@
 			</div>
 
 			<div v-else class="weather__wrapper">
-				<img class="weather__icon" :src="currentIcon">
+				<img class="weather__icon" :src="currentIcon" alt="#">
 				<div class="weather__temp">{{ currentWeatherTemp }}</div>
 				<v-container class="weather__info">
 					<v-row v-for="(obj, key) in currentWeatherInfo"
@@ -17,7 +17,7 @@
 				</v-container>
 				<div class="weather__data">
 					<div>Томск</div>
-					<div>24 февраля 2022 18:45</div>
+					<div v-html="currentTime"></div>
 					<div>{{ currentWeatherDescription }}</div>
 					<v-btn @click="updateWeather" class="weather__btn">
 						Обновить
@@ -42,24 +42,40 @@
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
-
 	name: "MainPage",
 	data() {
-		return {}
+		return {
+			currentTime: this.getCurrentTime()
+		}
 	},
 	created() {
 		this.requestWeather()
+	},
+	mounted() {
+		this.interval = setInterval(() => this.currentTime = this.getCurrentTime(), 1000)
+	},
+	beforeUnmount() {
+		clearInterval(this.interval)
 	},
 	methods: {
 		...mapActions(['requestWeather']),
 		updateWeather() {
 			this.requestWeather()
+		},
+		getCurrentTime() {
+			const date = new Date()
+			const day = date.toLocaleDateString()
+			const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+			const hours = date.getHours()
+			const opacity = date.getSeconds() % 2 ? 0 : 1
+			const divider = `<span style="opacity: ${opacity}">:</span>`
+			return `${day}  ${hours}${divider}${minutes}`
 		}
 	},
 	computed: {
 		...mapGetters(['getCurrentWeather', 'getRequestComplete']),
 		currentWeatherInfo: function () {
-			const result = [
+			return  [
 				{
 					title: 'Ощущается как',
 					value: this.getCurrentWeather.feels_like.toString().slice(0, -3) + '°C'
@@ -77,7 +93,6 @@ export default {
 					value: this.getCurrentWeather.wind_speed + ' м/с'
 				},
 			]
-			return result
 		},
 		currentWeatherTemp: function () {
 			return this.getCurrentWeather.temp.toString().slice(0, -3) + '°C';
@@ -146,6 +161,7 @@ export default {
 	:nth-child(2) {
 		font-size: 20px;
 	}
+
 	:nth-child(3) {
 		font-size: 18px;
 	}
