@@ -6,7 +6,7 @@
 			</div>
 
 			<div v-else class="weather__wrapper">
-				<div class="weather__icon">Иконка</div>
+				<img class="weather__icon" :src="currentIcon">
 				<div class="weather__temp">{{ currentWeatherTemp }}</div>
 				<v-container class="weather__info">
 					<v-row v-for="(obj, key) in currentWeatherInfo"
@@ -77,7 +77,6 @@ export default {
 					value: this.getCurrentWeather.wind_speed + ' м/с'
 				},
 			]
-			console.log(result)
 			return result
 		},
 		currentWeatherTemp: function () {
@@ -86,8 +85,8 @@ export default {
 		currentWeatherDescription: function () {
 			return this.getCurrentWeather.weather_description
 		},
-		currentWeatherIcon: function () {
-			return this.getCurrentWeather.weather_icon
+		currentIcon: function () {
+			return `http://openweathermap.org/img/wn/${this.getCurrentWeather.weather_icon}@2x.png`
 		}
 	},
 }
@@ -114,7 +113,7 @@ export default {
 }
 
 .weather__icon {
-	background: #9cd9dc;
+	background: #efeee9;
 	width: 15%;
 	height: 100%;
 }

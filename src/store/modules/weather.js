@@ -19,7 +19,6 @@ export default {
         updateWeather(state, resultRequest) {
             state.currentWeather = resultRequest
             state.requestCompleted = true
-            console.log(resultRequest)
         }
     },
     getters: {
@@ -31,7 +30,6 @@ export default {
                 pressure: state.currentWeather.main.pressure,
                 weather_description: state.currentWeather.weather[0].description,
                 weather_icon: state.currentWeather.weather[0].icon,
-                // weather_id: state.currentWeather.weather.id,
                 wind_speed: state.currentWeather.wind.speed,
             }
         },
