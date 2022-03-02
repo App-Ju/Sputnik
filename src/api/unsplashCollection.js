@@ -3,7 +3,7 @@ import axios from 'axios'
 const APIkey = ''
 
 const unsplahCollection = axios.create({
-    baseURL: `https://api.unsplash.com/search/collections?client_id=${APIkey}&query=`,
+    baseURL: `https://api.unsplash.com/search/collections?client_id=${APIkey}&per_page=9&query=`,
     method: "GET",
     headers: {
         "Content-Type": "application/json",
