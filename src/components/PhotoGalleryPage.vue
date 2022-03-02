@@ -3,7 +3,7 @@
 		<v-form class="search__form ">
 			<v-text-field
 				v-model="inputValue"
-				label="Посик фотографий"
+				label="Посик фотографий на unsplash.com"
 				@keydown.enter.prevent="requestCollection"
 				class="search__input"
 			></v-text-field>
@@ -24,7 +24,7 @@
 			v-else-if="!getRequestCollCompleted"
 		>
 			<v-card class="previously__card">
-				<p>Случайная фотография</p>
+				<p>Случайная фотография c unsplash.com</p>
 				<div>
 					<img :src="randomPhoto.photo" alt="#">
 				</div>
