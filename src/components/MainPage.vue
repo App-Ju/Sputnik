@@ -1,6 +1,6 @@
 <template>
-	<v-main class="container">
-		<v-card class="weather">
+	<v-main class="main__wrapper" :style="designSwitch">
+		<v-card class="weather container">
 			<div v-if="!getRequestComplete">
 				Загружается
 			</div>
@@ -26,15 +26,13 @@
 			</div>
 
 		</v-card>
-		<br><br><br>
-		<div class="nasa">
+		<div class="nasa container">
 			<br> <br>
 			в зависимости от времени суток должен изменяться дизайн страницы.
 			<br> <br>
 			Также на странице должна быть отображена информация, полученная из Nasa APOD API (заголовок, факт и
 			картинка).
 		</div>
-
 	</v-main>
 </template>
 
@@ -75,7 +73,7 @@ export default {
 	computed: {
 		...mapGetters(['getCurrentWeather', 'getRequestComplete']),
 		currentWeatherInfo: function () {
-			return  [
+			return [
 				{
 					title: 'Ощущается как',
 					value: this.getCurrentWeather.feels_like.toString().slice(0, -3) + '°C'
@@ -101,19 +99,29 @@ export default {
 			return this.getCurrentWeather.weather_description
 		},
 		currentIcon: function () {
-			return `http://openweathermap.org/img/wn/${this.getCurrentWeather.weather_icon}@2x.png`
+			const date = new Date().getHours()
+			const icon = this.getCurrentWeather.weather_icon.slice(0, -1)
+			if (date >= 20 || date < 8) {
+				return `http://openweathermap.org/img/wn/${icon}n@2x.png`
+			} else if (date >= 8) {
+				return `http://openweathermap.org/img/wn/${icon}d@2x.png`
+			}
+		},
+		designSwitch: function () {
+			const date = new Date().getHours()
+			if (date >= 20 || date < 8) {
+				return 'background: #a1a5b6'
+			} else if (date >= 8) {
+				return 'background: #fafac5'
+			}
 		}
 	},
 }
 </script>
 
 <style lang="scss" scoped>
-.container {
-	width: 70%;
-}
-
-.nasa {
-	text-align: center;
+.main__wrapper {
+	min-height: calc(100% - 120px);
 }
 
 .weather {
@@ -128,9 +136,9 @@ export default {
 }
 
 .weather__icon {
-	background: #efeee9;
-	width: 15%;
-	height: 100%;
+	border: 1px solid #b0acac;
+	width: 13%;
+	object-fit: contain;
 }
 
 .weather__temp {
@@ -165,7 +173,6 @@ export default {
 	:nth-child(3) {
 		font-size: 18px;
 	}
-
 }
 
 .weather__btn {
@@ -173,5 +180,9 @@ export default {
 	width: 90px;
 	height: 26px;
 	font-size: 11px;
+}
+
+.nasa {
+	text-align: center;
 }
 </style>

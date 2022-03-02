@@ -20,7 +20,7 @@ export default {
 	align-items: center;
 	height: 60px;
 	width: 100%;
-	background: #afa8b2;
+	background: #767177;
 
 	a:link, :visited {
 		color: #ffffff;
