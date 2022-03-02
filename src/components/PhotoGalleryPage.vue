@@ -3,7 +3,7 @@
 		<v-form class="search__form ">
 			<v-text-field
 				v-model="inputValue"
-				label="Посик фотографий на unsplash.com"
+				label="Поиск фотографий на unsplash.com"
 				@keydown.enter.prevent="requestCollection"
 				class="search__input"
 			></v-text-field>
