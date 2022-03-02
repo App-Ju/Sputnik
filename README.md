@@ -1,10 +1,9 @@
 # Dadata
 ```
-для корректной работы приложения необходимо посетить 
-
-https://cors-anywhere.herokuapp.com/corsdemo
-
-и активировать демо режим для работы прокси сервера 
+введите ключ доступа в переменной APIkey, 
+для корректной работы unsplash API в:
+src/api/unsplashCollection.js
+src/api/unsplashRandomPhoto.js
 ```
 
 ## Project setup

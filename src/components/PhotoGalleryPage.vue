@@ -14,17 +14,30 @@
 			</div>
 		</v-form>
 		<div
-			class="search__previously"
-			v-if="!getRequestCollCompleted"
+			class="search__loader"
+			v-if="!getRandomPhotoCompleted"
 		>
-			Рандом фото
+			<img :src="require('@/assets/loader.gif')" alt="#">
+		</div>
+		<div
+			class="search__previously"
+			v-else-if="!getRequestCollCompleted"
+		>
+			<v-card class="previously__card">
+				<p>Случайная фотография</p>
+				<div>
+					<img :src="randomPhoto.photo" alt="#">
+				</div>
+				<p>Автор: {{ randomPhoto.name }}</p>
+				<p>Название: {{ randomPhoto.title }}</p>
+			</v-card>
 		</div>
 		<v-container
 			class="search__result"
 			v-else
 		>
 			<v-row
-				v-for="(photosArray, key) in PhotoCollection"
+				v-for="(photosArray, key) in photoCollection"
 				:key="key"
 			>
 				<v-col
@@ -55,9 +68,12 @@ export default {
 			inputValue: '',
 		}
 	},
+	created() {
+		this.requestRandomPhoto()
+	},
 	computed: {
-		...mapGetters(['getCollection', 'getRequestCollCompleted']),
-		PhotoCollection: function () {
+		...mapGetters(['getCollection', 'getRequestCollCompleted', 'getRandomPhoto', 'getRandomPhotoCompleted']),
+		photoCollection: function () {
 			const result = []
 			for (let i = 0; i < this.getCollection.length; i += 3) {
 				result.push([
@@ -67,10 +83,14 @@ export default {
 				])
 			}
 			return result
+		},
+		randomPhoto() {
+			console.log(this.getRandomPhoto)
+			return this.getRandomPhoto;
 		}
 	},
 	methods: {
-		...mapActions(['requestColl']),
+		...mapActions(['requestColl', 'requestRandomPhoto']),
 		async requestCollection() {
 			if (this.inputValue.trim()) {
 				await this.requestColl(this.inputValue)
@@ -92,22 +112,51 @@ export default {
 	margin-bottom: 5%;
 }
 
+.search__loader {
+	text-align: center;
+
+	img {
+		width: 10%;
+		height: 10%;
+	}
+}
+
+.search__previously {
+	margin-bottom: 5%;
+	text-align: center;
+}
+
+.previously__card {
+	width: 30vw;
+	height: 40vh;
+	padding: 2%;
+	margin: 0 auto;
+
+	img {
+		height: 30vh;
+		object-fit: contain;
+		margin: 2% 0;
+	}
+}
+
 .search__result {
 	margin-bottom: 5%;
 }
 
 .result__col {
 	width: 25vw;
-	max-height: 30vh;
+	height: 30vh;
 	margin-bottom: 5%;
 }
 
 .result__card {
+	height: 32vh;
 	padding: 2%;
 	text-align: center;
 
 	img {
 		height: 25vh;
+		width: 100%;
 		object-fit: contain;
 		margin-bottom: 2%;
 	}

@@ -3,8 +3,8 @@ import axios from 'axios'
 //введите ключ доступа в переменной APIkey
 const APIkey = ''
 
-const unsplahCollection = axios.create({
-    baseURL: `https://api.unsplash.com/search/collections?client_id=${APIkey}&per_page=9&query=`,
+const unsplahPhoto = axios.create({
+    baseURL: `https://api.unsplash.com/photos/random?client_id=${APIkey}`,
     method: "GET",
     headers: {
         "Content-Type": "application/json",
@@ -12,4 +12,4 @@ const unsplahCollection = axios.create({
     },
 })
 
-export default unsplahCollection
+export default unsplahPhoto
