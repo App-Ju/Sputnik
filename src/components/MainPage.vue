@@ -1,10 +1,12 @@
 <template>
 	<v-main class="main__wrapper" :style="designSwitch">
 		<v-card class="weather container">
-			<div v-if="!getRequestComplete">
-				Загружается
+			<div
+				class="loader"
+				v-if="!getRequestComplete"
+			>
+				<img :src="require('@/assets/loader.gif')" alt="#">
 			</div>
-
 			<div v-else class="weather__wrapper">
 				<img class="weather__icon" :src="currentIcon" alt="#">
 				<div class="weather__temp">{{ currentWeatherTemp }}</div>
@@ -24,15 +26,22 @@
 					</v-btn>
 				</div>
 			</div>
-
 		</v-card>
-		<div class="nasa container">
-			<br> <br>
-			в зависимости от времени суток должен изменяться дизайн страницы.
-			<br> <br>
-			Также на странице должна быть отображена информация, полученная из Nasa APOD API (заголовок, факт и
-			картинка).
-		</div>
+		<v-card class="nasa container">
+			<div
+				class="loader"
+				v-if="!getNasaCompleted"
+			>
+				<img :src="require('@/assets/loader.gif')" alt="#">
+			</div>
+			<div class="nasa__data">
+				<div>
+					<img :src="nasaData.photo" alt="#">
+				</div>
+				<p>{{ nasaData.title }}</p>
+				<p>{{ nasaData.fact }}</p>
+			</div>
+		</v-card>
 	</v-main>
 </template>
 
@@ -48,6 +57,7 @@ export default {
 	},
 	created() {
 		this.requestWeather()
+		this.requestNasaAPOD()
 	},
 	mounted() {
 		this.interval = setInterval(() => this.currentTime = this.getCurrentTime(), 1000)
@@ -56,7 +66,7 @@ export default {
 		clearInterval(this.interval)
 	},
 	methods: {
-		...mapActions(['requestWeather']),
+		...mapActions(['requestWeather', 'requestNasaAPOD']),
 		updateWeather() {
 			this.requestWeather()
 		},
@@ -71,7 +81,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['getCurrentWeather', 'getRequestComplete']),
+		...mapGetters(['getCurrentWeather', 'getRequestComplete', 'getNasaAPOD', 'getNasaCompleted']),
 		currentWeatherInfo: function () {
 			return [
 				{
@@ -114,6 +124,9 @@ export default {
 			} else if (date >= 8) {
 				return 'background: #fafac5'
 			}
+		},
+		nasaData: function () {
+			return this.getNasaAPOD
 		}
 	},
 }
@@ -124,8 +137,17 @@ export default {
 	min-height: calc(100% - 120px);
 }
 
+.loader {
+	text-align: center;
+
+	img {
+		width: 10%;
+		height: 10%;
+	}
+}
+
 .weather {
-	margin-top: 5%;
+	margin-top: 3%;
 	padding: 3%;
 }
 
@@ -183,6 +205,26 @@ export default {
 }
 
 .nasa {
+	margin: 3% auto 7% auto;
+}
+
+.nasa__data {
+	padding: 2%;
 	text-align: center;
+
+	img {
+		height: 50vh;
+		object-fit: contain;
+		margin-bottom: 1%;
+	}
+
+	:nth-child(2) {
+		font-size: 1.2rem;
+		margin-bottom: 1%;
+	}
+
+	:last-child {
+		line-height: 120%;
+	}
 }
 </style>

@@ -9,7 +9,6 @@ export default {
         async requestRandomPhoto(context) {
             try {
                 const resultRequest = await unsplahPhoto()
-                console.log(resultRequest.data)
                 context.commit('loadRandomPhoto', resultRequest.data)
             } catch (error) {
                 console.log(error)
@@ -24,7 +23,6 @@ export default {
     },
     getters: {
         getRandomPhoto(state) {
-            console.log('getRandomPhoto')
             if (state.randomPhoto) {
                 return {
                     photo: state.randomPhoto.urls.small,
@@ -34,7 +32,6 @@ export default {
             }
         },
         getRandomPhotoCompleted(state) {
-            console.log('getRandomPhotoCompleted')
             return state.requestCollCompleted
         }
     }

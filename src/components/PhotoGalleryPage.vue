@@ -85,7 +85,6 @@ export default {
 			return result
 		},
 		randomPhoto() {
-			console.log(this.getRandomPhoto)
 			return this.getRandomPhoto;
 		}
 	},
