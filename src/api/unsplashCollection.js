@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-//введите ключ доступа в переменной APIkey
-const APIkey = ''
+const APIkey = 'ab7vrK_3qh2eHXZSqVvlwdxXDfkKLFvPipajRXfKJ7g'
 
 const unsplahCollection = axios.create({
     baseURL: `https://api.unsplash.com/search/collections?client_id=${APIkey}&per_page=9&query=`,

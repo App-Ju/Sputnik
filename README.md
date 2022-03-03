@@ -1,9 +1,5 @@
-# Dadata
+# Sputnik
 ```
-введите ключ доступа в переменной APIkey, 
-для корректной работы unsplash API в:
-src/api/unsplashCollection.js
-src/api/unsplashRandomPhoto.js
 ```
 
 ## Project setup

@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-//введите ключ доступа в переменной APIkey
-const APIkey = ''
+const APIkey = 'ab7vrK_3qh2eHXZSqVvlwdxXDfkKLFvPipajRXfKJ7g'
 
 const unsplahPhoto = axios.create({
     baseURL: `https://api.unsplash.com/photos/random?client_id=${APIkey}`,

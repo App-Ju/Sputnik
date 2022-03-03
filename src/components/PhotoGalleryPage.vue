@@ -127,7 +127,7 @@ export default {
 
 .previously__card {
 	width: 30vw;
-	height: 40vh;
+	height: 42vh;
 	padding: 2%;
 	margin: 0 auto;
 
@@ -144,12 +144,12 @@ export default {
 
 .result__col {
 	width: 25vw;
-	height: 30vh;
+	height: 32vh;
 	margin-bottom: 5%;
 }
 
 .result__card {
-	height: 32vh;
+	height: 34vh;
 	padding: 2%;
 	text-align: center;
 
