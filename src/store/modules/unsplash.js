@@ -1,4 +1,4 @@
-import unsplahCollection from "@/api/unsplashCollection";
+import {photoCollection} from "@/api/unsplash"
 
 export default {
     state: {
@@ -8,9 +8,7 @@ export default {
     actions: {
         async requestColl(context, query) {
             try {
-                const resultRequest = await unsplahCollection({
-                    url: `${query}`
-                })
+                const resultRequest = await photoCollection(query)
                 context.commit('updateCollection', resultRequest.data.results)
             } catch (error) {
                 console.log(error)

@@ -1,4 +1,4 @@
-import unsplahPhoto from "@/api/unsplashRandomPhoto";
+import {randomPhoto} from "@/api/unsplash";
 
 export default {
     state: {
@@ -8,7 +8,7 @@ export default {
     actions: {
         async requestRandomPhoto(context) {
             try {
-                const resultRequest = await unsplahPhoto()
+                const resultRequest = await randomPhoto()
                 context.commit('loadRandomPhoto', resultRequest.data)
             } catch (error) {
                 console.log(error)
