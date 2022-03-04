@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const APIkey = 'ab7vrK_3qh2eHXZSqVvlwdxXDfkKLFvPipajRXfKJ7g'
+const APIkey = process.env.VUE_APP_UNSPLASH_API_KEY
+
 const instance = axios.create({
     baseURL: "https://api.unsplash.com/",
     headers: {
